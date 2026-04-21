@@ -40,7 +40,7 @@
     "prepublishOnly": "npm run build && npm test"
   },
   "dependencies": {
-    "@lacelang/validator": ">=0.1.0 <0.2.0",
+    "@lacelang/validator": "file:../lacelang-js-validator",
     "smol-toml": "^1.3.0"
   },
   "devDependencies": {
