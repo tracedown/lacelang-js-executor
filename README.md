@@ -107,6 +107,48 @@ maxTimeoutMs = 60000
 const executor = new LaceExecutor("lace", { env: "staging" });
 ```
 
+### Extensions
+
+Built-in extensions (`laceNotifications`, `laceBaseline`) are bundled and
+activated via config or constructor:
+
+```typescript
+// Via constructor
+const executor = new LaceExecutor("lace", {
+  extensions: ["laceNotifications"],
+});
+
+// Via lace.config
+// [executor]
+// extensions = ["laceNotifications"]
+```
+
+Register third-party extensions:
+
+```typescript
+// Directory (finds myext.laceext + myext.config inside)
+executor.extension("lace/extensions/myext");
+
+// Explicit paths
+executor.extension("path/to/custom.laceext", "path/to/custom.config");
+```
+
+### Low-level API
+
+The stateless `runScript()` function is available for callers that need
+full control over parsing, validation, and config:
+
+```typescript
+import { parse } from "@lacelang/validator";
+import { runScript, loadConfig } from "@lacelang/executor";
+import * as fs from "node:fs";
+
+const ast = parse(fs.readFileSync("script.lace", "utf-8"));
+const config = loadConfig({ explicitPath: "lace.config" });
+
+const result = await runScript(ast, { key: "val" }, null, null, null, null, null, config);
+```
+
 ## Responsible use
 
 This software is designed for monitoring endpoints you **own or have
