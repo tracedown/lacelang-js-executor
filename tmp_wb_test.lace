@@ -1,3 +1,0 @@
-get("https://httpbin.org/status/200")
-    .expect(status: 200)
-    .store({ "$$run_only": "r1", "$cursor": "abc", writeback_plain: "w1" })
