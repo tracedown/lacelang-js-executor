@@ -1,0 +1,35 @@
+name: Tests
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  test:
+    if: github.repository == 'tracedown/lacelang-js-executor' && !startsWith(github.event.pull_request.title, 'WIP:')
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: ["18", "20", "22"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install validator dependency
+        run: npm install git+https://github.com/tracedown/lacelang-js-validator.git
+
+      - name: Install dependencies
+        run: rm -f package-lock.json && npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Run tests
+        run: npm test

@@ -1,0 +1,157 @@
+{
+  "outcome": "success",
+  "startedAt": "1970-01-01T00:00:00.000Z",
+  "endedAt": "1970-01-01T00:00:00.000Z",
+  "elapsedMs": 602,
+  "runVars": {
+    "token": "testuser",
+    "session_verified": 200
+  },
+  "calls": [
+    {
+      "index": 0,
+      "outcome": "success",
+      "startedAt": "1970-01-01T00:00:00.000Z",
+      "endedAt": "1970-01-01T00:00:00.000Z",
+      "request": {
+        "url": "https://httpbin.org/post",
+        "method": "post",
+        "headers": {
+          "Content-Type": "application/json",
+          "User-Agent": "lace-probe/0.1.0 (lacelang-js)"
+        },
+        "bodyPath": "call_0_request.json"
+      },
+      "response": {
+        "status": 200,
+        "statusText": "OK",
+        "headers": {
+          "date": "Thu, 01 Jan 1970 00:00:00 GMT",
+          "content-type": "application/json",
+          "content-length": "497",
+          "connection": "keep-alive",
+          "server": "gunicorn/19.9.0",
+          "access-control-allow-origin": "*",
+          "access-control-allow-credentials": "true"
+        },
+        "bodyPath": "call_0_response.json",
+        "responseTimeMs": 481,
+        "dnsMs": 3,
+        "connectMs": 114,
+        "tlsMs": 225,
+        "ttfbMs": 798,
+        "transferMs": 1,
+        "sizeBytes": 497,
+        "dns": {
+          "resolvedIps": [
+            "203.0.113.1"
+          ],
+          "resolvedIp": "203.0.113.1"
+        },
+        "tls": {
+          "protocol": "TLSv1.2",
+          "cipher": "ECDHE-RSA-AES128-GCM-SHA256",
+          "alpn": "http/1.1",
+          "certificate": {
+            "subject": {
+              "cn": "httpbin.org"
+            },
+            "subjectAltNames": [
+              "DNS:httpbin.org",
+              "DNS:*.httpbin.org"
+            ],
+            "issuer": {
+              "cn": "Amazon RSA 2048 M03"
+            },
+            "notBefore": "1970-01-01T00:00:00.000Z",
+            "notAfter": "1970-01-01T00:00:00.000Z"
+          }
+        }
+      },
+      "redirects": [],
+      "assertions": [
+        {
+          "method": "expect",
+          "scope": "status",
+          "op": "eq",
+          "outcome": "passed",
+          "actual": 200,
+          "expected": 200,
+          "options": null
+        }
+      ],
+      "config": {
+        "body": {
+          "type": "json",
+          "value": {
+            "username": "testuser",
+            "password": "testpass"
+          }
+        }
+      },
+      "warnings": [],
+      "error": null
+    },
+    {
+      "index": 1,
+      "outcome": "success",
+      "startedAt": "1970-01-01T00:00:00.000Z",
+      "endedAt": "1970-01-01T00:00:00.000Z",
+      "request": {
+        "url": "https://httpbin.org/get",
+        "method": "get",
+        "headers": {
+          "Authorization": "Bearer testuser",
+          "User-Agent": "lace-probe/0.1.0 (lacelang-js)"
+        },
+        "bodyPath": null
+      },
+      "response": {
+        "status": 200,
+        "statusText": "OK",
+        "headers": {
+          "date": "Thu, 01 Jan 1970 00:00:00 GMT",
+          "content-type": "application/json",
+          "content-length": "294",
+          "connection": "keep-alive",
+          "server": "gunicorn/19.9.0",
+          "access-control-allow-origin": "*",
+          "access-control-allow-credentials": "true"
+        },
+        "bodyPath": "call_1_response.json",
+        "responseTimeMs": 116,
+        "dnsMs": 0,
+        "connectMs": 0,
+        "tlsMs": 0,
+        "ttfbMs": 115,
+        "transferMs": 0,
+        "sizeBytes": 294,
+        "dns": {
+          "resolvedIps": [],
+          "resolvedIp": null
+        },
+        "tls": null
+      },
+      "redirects": [],
+      "assertions": [
+        {
+          "method": "expect",
+          "scope": "status",
+          "op": "eq",
+          "outcome": "passed",
+          "actual": 200,
+          "expected": 200,
+          "options": null
+        }
+      ],
+      "config": {
+        "headers": {
+          "Authorization": "Bearer testuser"
+        }
+      },
+      "warnings": [],
+      "error": null
+    }
+  ],
+  "actions": {}
+}

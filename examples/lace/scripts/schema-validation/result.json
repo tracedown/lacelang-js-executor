@@ -1,0 +1,144 @@
+{
+  "outcome": "success",
+  "startedAt": "1970-01-01T00:00:00.000Z",
+  "endedAt": "1970-01-01T00:00:00.000Z",
+  "elapsedMs": 1306,
+  "runVars": {
+    "title": null
+  },
+  "calls": [
+    {
+      "index": 0,
+      "outcome": "success",
+      "startedAt": "1970-01-01T00:00:00.000Z",
+      "endedAt": "1970-01-01T00:00:00.000Z",
+      "request": {
+        "url": "https://httpbin.org/json",
+        "method": "get",
+        "headers": {
+          "User-Agent": "lace-probe/0.1.0 (lacelang-js)"
+        },
+        "bodyPath": null
+      },
+      "response": {
+        "status": 200,
+        "statusText": "OK",
+        "headers": {
+          "date": "Thu, 01 Jan 1970 00:00:00 GMT",
+          "content-type": "application/json",
+          "content-length": "429",
+          "connection": "keep-alive",
+          "server": "gunicorn/19.9.0",
+          "access-control-allow-origin": "*",
+          "access-control-allow-credentials": "true"
+        },
+        "bodyPath": "call_0_response.json",
+        "responseTimeMs": 1302,
+        "dnsMs": 4,
+        "connectMs": 115,
+        "tlsMs": 227,
+        "ttfbMs": 1624,
+        "transferMs": 1,
+        "sizeBytes": 429,
+        "dns": {
+          "resolvedIps": [
+            "203.0.113.1"
+          ],
+          "resolvedIp": "203.0.113.1"
+        },
+        "tls": {
+          "protocol": "TLSv1.2",
+          "cipher": "ECDHE-RSA-AES128-GCM-SHA256",
+          "alpn": "http/1.1",
+          "certificate": {
+            "subject": {
+              "cn": "httpbin.org"
+            },
+            "subjectAltNames": [
+              "DNS:httpbin.org",
+              "DNS:*.httpbin.org"
+            ],
+            "issuer": {
+              "cn": "Amazon RSA 2048 M03"
+            },
+            "notBefore": "1970-01-01T00:00:00.000Z",
+            "notAfter": "1970-01-01T00:00:00.000Z"
+          }
+        }
+      },
+      "redirects": [],
+      "assertions": [
+        {
+          "method": "expect",
+          "scope": "status",
+          "op": "eq",
+          "outcome": "passed",
+          "actual": 200,
+          "expected": 200,
+          "options": null
+        },
+        {
+          "method": "expect",
+          "scope": "body",
+          "op": "eq",
+          "outcome": "passed",
+          "actual": {
+            "slideshow": {
+              "author": "Yours Truly",
+              "date": "date of publication",
+              "slides": [
+                {
+                  "title": "Wake up to WonderWidgets!",
+                  "type": "all"
+                },
+                {
+                  "items": [
+                    "Why <em>WonderWidgets</em> are great",
+                    "Who <em>buys</em> WonderWidgets"
+                  ],
+                  "title": "Overview",
+                  "type": "all"
+                }
+              ],
+              "title": "Sample Slide Show"
+            }
+          },
+          "expected": {
+            "__lace_schema__": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "slideshow"
+              ],
+              "properties": {
+                "slideshow": {
+                  "type": "object",
+                  "required": [
+                    "title",
+                    "author"
+                  ],
+                  "properties": {
+                    "title": {
+                      "type": "string"
+                    },
+                    "author": {
+                      "type": "string"
+                    },
+                    "slides": {
+                      "type": "array"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "options": null
+        }
+      ],
+      "config": {},
+      "warnings": [],
+      "error": null
+    }
+  ],
+  "actions": {}
+}

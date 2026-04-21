@@ -1,0 +1,51 @@
+{
+  "name": "@lacelang/executor",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Reference TypeScript executor for the Lace probe scripting language",
+  "license": "Apache-2.0",
+  "author": "lacelang contributors",
+  "keywords": ["lace", "lacelang", "executor", "http", "probe", "monitoring"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tracedown/lacelang-js-executor.git"
+  },
+  "homepage": "https://github.com/tracedown/lacelang-js-executor",
+  "bugs": "https://github.com/tracedown/lacelang-js-executor/issues",
+  "engines": {
+    "node": ">=18"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist/**/*.js",
+    "dist/**/*.d.ts",
+    "dist/extensions/**",
+    "LICENSE",
+    "README.md"
+  ],
+  "bin": {
+    "lacelang-executor": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc && rm -rf dist/extensions && cp -r src/extensions dist/extensions",
+    "test": "vitest run",
+    "test:network": "NETWORK=1 vitest run",
+    "prepublishOnly": "npm run build && npm test"
+  },
+  "dependencies": {
+    "@lacelang/validator": ">=0.1.0 <0.2.0",
+    "smol-toml": "^1.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.4.0",
+    "vitest": "^3.1.0"
+  }
+}

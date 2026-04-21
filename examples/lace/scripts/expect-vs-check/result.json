@@ -1,0 +1,142 @@
+{
+  "outcome": "success",
+  "startedAt": "1970-01-01T00:00:00.000Z",
+  "endedAt": "1970-01-01T00:00:00.000Z",
+  "elapsedMs": 1040,
+  "runVars": {
+    "final": 200
+  },
+  "calls": [
+    {
+      "index": 0,
+      "outcome": "success",
+      "startedAt": "1970-01-01T00:00:00.000Z",
+      "endedAt": "1970-01-01T00:00:00.000Z",
+      "request": {
+        "url": "https://httpbin.org/status/404",
+        "method": "get",
+        "headers": {
+          "User-Agent": "lace-probe/0.1.0 (lacelang-js)"
+        },
+        "bodyPath": null
+      },
+      "response": {
+        "status": 404,
+        "statusText": "NOT FOUND",
+        "headers": {
+          "date": "Thu, 01 Jan 1970 00:00:00 GMT",
+          "content-type": "text/html; charset=utf-8",
+          "content-length": "0",
+          "connection": "keep-alive",
+          "server": "gunicorn/19.9.0",
+          "access-control-allow-origin": "*",
+          "access-control-allow-credentials": "true"
+        },
+        "bodyPath": null,
+        "responseTimeMs": 649,
+        "dnsMs": 6,
+        "connectMs": 145,
+        "tlsMs": 274,
+        "ttfbMs": 1049,
+        "transferMs": 1,
+        "sizeBytes": 0,
+        "dns": {
+          "resolvedIps": [
+            "203.0.113.1"
+          ],
+          "resolvedIp": "203.0.113.1"
+        },
+        "tls": {
+          "protocol": "TLSv1.2",
+          "cipher": "ECDHE-RSA-AES128-GCM-SHA256",
+          "alpn": "http/1.1",
+          "certificate": {
+            "subject": {
+              "cn": "httpbin.org"
+            },
+            "subjectAltNames": [
+              "DNS:httpbin.org",
+              "DNS:*.httpbin.org"
+            ],
+            "issuer": {
+              "cn": "Amazon RSA 2048 M03"
+            },
+            "notBefore": "1970-01-01T00:00:00.000Z",
+            "notAfter": "1970-01-01T00:00:00.000Z"
+          }
+        }
+      },
+      "redirects": [],
+      "assertions": [
+        {
+          "method": "check",
+          "scope": "status",
+          "op": "eq",
+          "outcome": "failed",
+          "actual": 404,
+          "expected": 200,
+          "options": null
+        }
+      ],
+      "config": {},
+      "warnings": [],
+      "error": null
+    },
+    {
+      "index": 1,
+      "outcome": "success",
+      "startedAt": "1970-01-01T00:00:00.000Z",
+      "endedAt": "1970-01-01T00:00:00.000Z",
+      "request": {
+        "url": "https://httpbin.org/status/200",
+        "method": "get",
+        "headers": {
+          "User-Agent": "lace-probe/0.1.0 (lacelang-js)"
+        },
+        "bodyPath": null
+      },
+      "response": {
+        "status": 200,
+        "statusText": "OK",
+        "headers": {
+          "date": "Thu, 01 Jan 1970 00:00:00 GMT",
+          "content-type": "text/html; charset=utf-8",
+          "content-length": "0",
+          "connection": "keep-alive",
+          "server": "gunicorn/19.9.0",
+          "access-control-allow-origin": "*",
+          "access-control-allow-credentials": "true"
+        },
+        "bodyPath": null,
+        "responseTimeMs": 388,
+        "dnsMs": 0,
+        "connectMs": 0,
+        "tlsMs": 0,
+        "ttfbMs": 388,
+        "transferMs": 0,
+        "sizeBytes": 0,
+        "dns": {
+          "resolvedIps": [],
+          "resolvedIp": null
+        },
+        "tls": null
+      },
+      "redirects": [],
+      "assertions": [
+        {
+          "method": "expect",
+          "scope": "status",
+          "op": "eq",
+          "outcome": "passed",
+          "actual": 200,
+          "expected": 200,
+          "options": null
+        }
+      ],
+      "config": {},
+      "warnings": [],
+      "error": null
+    }
+  ],
+  "actions": {}
+}

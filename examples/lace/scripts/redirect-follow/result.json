@@ -1,0 +1,108 @@
+{
+  "outcome": "failure",
+  "startedAt": "1970-01-01T00:00:00.000Z",
+  "endedAt": "1970-01-01T00:00:00.000Z",
+  "elapsedMs": 4465,
+  "runVars": {
+    "hops": [
+      "https://httpbin.org/relative-redirect/1",
+      "https://httpbin.org/get"
+    ]
+  },
+  "calls": [
+    {
+      "index": 0,
+      "outcome": "success",
+      "startedAt": "1970-01-01T00:00:00.000Z",
+      "endedAt": "1970-01-01T00:00:00.000Z",
+      "request": {
+        "url": "https://httpbin.org/redirect/2",
+        "method": "get",
+        "headers": {
+          "User-Agent": "lace-probe/0.1.0 (lacelang-js)"
+        },
+        "bodyPath": null
+      },
+      "response": {
+        "status": 200,
+        "statusText": "OK",
+        "headers": {
+          "date": "Thu, 01 Jan 1970 00:00:00 GMT",
+          "content-type": "application/json",
+          "content-length": "253",
+          "connection": "keep-alive",
+          "server": "gunicorn/19.9.0",
+          "access-control-allow-origin": "*",
+          "access-control-allow-credentials": "true"
+        },
+        "bodyPath": "call_0_response.json",
+        "responseTimeMs": 436,
+        "dnsMs": 0,
+        "connectMs": 0,
+        "tlsMs": 0,
+        "ttfbMs": 435,
+        "transferMs": 0,
+        "sizeBytes": 253,
+        "dns": {
+          "resolvedIps": [],
+          "resolvedIp": null
+        },
+        "tls": null
+      },
+      "redirects": [
+        "https://httpbin.org/relative-redirect/1",
+        "https://httpbin.org/get"
+      ],
+      "assertions": [
+        {
+          "method": "expect",
+          "scope": "status",
+          "op": "eq",
+          "outcome": "passed",
+          "actual": 200,
+          "expected": 200,
+          "options": null
+        }
+      ],
+      "config": {
+        "redirects": {
+          "follow": true,
+          "max": 5
+        }
+      },
+      "warnings": [],
+      "error": null
+    },
+    {
+      "index": 1,
+      "outcome": "failure",
+      "startedAt": "1970-01-01T00:00:00.000Z",
+      "endedAt": "1970-01-01T00:00:00.000Z",
+      "request": {
+        "url": "https://httpbin.org/redirect/3",
+        "method": "get",
+        "headers": {
+          "User-Agent": "lace-probe/0.1.0 (lacelang-js)"
+        },
+        "bodyPath": null
+      },
+      "response": null,
+      "redirects": [
+        "https://httpbin.org/relative-redirect/2"
+      ],
+      "assertions": [],
+      "config": {
+        "redirects": {
+          "max": 1
+        },
+        "timeout": {
+          "ms": 10000,
+          "action": "warn"
+        }
+      },
+      "warnings": [],
+      "error": "redirect limit 1 exceeded"
+    }
+  ],
+  "actions": {}
+}

@@ -1,0 +1,127 @@
+{
+  "outcome": "success",
+  "startedAt": "1970-01-01T00:00:00.000Z",
+  "endedAt": "1970-01-01T00:00:00.000Z",
+  "elapsedMs": 862,
+  "runVars": {},
+  "calls": [
+    {
+      "index": 0,
+      "outcome": "success",
+      "startedAt": "1970-01-01T00:00:00.000Z",
+      "endedAt": "1970-01-01T00:00:00.000Z",
+      "request": {
+        "url": "https://httpbin.org/cookies/set/session_id/abc123",
+        "method": "get",
+        "headers": {
+          "User-Agent": "lace-probe/0.1.0 (lacelang-js)",
+          "Cookie": "session_id=abc123"
+        },
+        "bodyPath": null
+      },
+      "response": {
+        "status": 200,
+        "statusText": "OK",
+        "headers": {
+          "date": "Thu, 01 Jan 1970 00:00:00 GMT",
+          "content-type": "application/json",
+          "content-length": "50",
+          "connection": "keep-alive",
+          "server": "gunicorn/19.9.0",
+          "access-control-allow-origin": "*",
+          "access-control-allow-credentials": "true"
+        },
+        "bodyPath": "call_0_response.json",
+        "responseTimeMs": 139,
+        "dnsMs": 0,
+        "connectMs": 0,
+        "tlsMs": 0,
+        "ttfbMs": 139,
+        "transferMs": 0,
+        "sizeBytes": 50,
+        "dns": {
+          "resolvedIps": [],
+          "resolvedIp": null
+        },
+        "tls": null
+      },
+      "redirects": [
+        "https://httpbin.org/cookies"
+      ],
+      "assertions": [
+        {
+          "method": "expect",
+          "scope": "status",
+          "op": "eq",
+          "outcome": "passed",
+          "actual": 200,
+          "expected": [
+            200,
+            302
+          ],
+          "options": null
+        }
+      ],
+      "config": {},
+      "warnings": [],
+      "error": null
+    },
+    {
+      "index": 1,
+      "outcome": "success",
+      "startedAt": "1970-01-01T00:00:00.000Z",
+      "endedAt": "1970-01-01T00:00:00.000Z",
+      "request": {
+        "url": "https://httpbin.org/cookies",
+        "method": "get",
+        "headers": {
+          "User-Agent": "lace-probe/0.1.0 (lacelang-js)",
+          "Cookie": "session_id=abc123"
+        },
+        "bodyPath": null
+      },
+      "response": {
+        "status": 200,
+        "statusText": "OK",
+        "headers": {
+          "date": "Thu, 01 Jan 1970 00:00:00 GMT",
+          "content-type": "application/json",
+          "content-length": "50",
+          "connection": "keep-alive",
+          "server": "gunicorn/19.9.0",
+          "access-control-allow-origin": "*",
+          "access-control-allow-credentials": "true"
+        },
+        "bodyPath": "call_1_response.json",
+        "responseTimeMs": 154,
+        "dnsMs": 0,
+        "connectMs": 0,
+        "tlsMs": 0,
+        "ttfbMs": 152,
+        "transferMs": 1,
+        "sizeBytes": 50,
+        "dns": {
+          "resolvedIps": [],
+          "resolvedIp": null
+        },
+        "tls": null
+      },
+      "redirects": [],
+      "assertions": [
+        {
+          "method": "expect",
+          "scope": "status",
+          "op": "eq",
+          "outcome": "passed",
+          "actual": 200,
+          "expected": 200,
+          "options": null
+        }
+      ],
+      "config": {},
+      "warnings": [],
+      "error": null
+    }
+  ],
+  "actions": {}
+}
