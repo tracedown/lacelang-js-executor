@@ -1,7 +1,7 @@
 # lacelang-executor (TypeScript)
 
 Reference TypeScript executor for [Lace](https://github.com/tracedown/lacelang) --
-the reference implementation with **100% spec conformance** (v0.9.0, 171/171
+the reference implementation with **100% spec conformance** (v0.9.1, 171/171
 conformance vectors). Runs `.lace` scripts against real HTTP endpoints and
 emits ProbeResult JSON.
 

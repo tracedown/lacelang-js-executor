@@ -11,6 +11,7 @@
  */
 
 import * as fs from "node:fs";
+import * as os from "node:os";
 import * as path from "node:path";
 import { parseArgs } from "node:util";
 
@@ -151,6 +152,7 @@ async function cmdRun(args: {
   bodies_dir?: string;
   pretty?: boolean;
   enable_extensions?: string[];
+  save_body?: boolean;
 }): Promise<number> {
   const { runScript } = await import("./executor.js");
 
@@ -186,6 +188,15 @@ async function cmdRun(args: {
       return 0;
     }
     throw e;
+  }
+
+  // --save-body: set bodies.dir to result path (or temp default) if not already set.
+  if (args.save_body && !args.bodies_dir) {
+    const resultPath = config.result.path;
+    config.result.bodies.dir =
+      typeof resultPath === "string"
+        ? resultPath
+        : (process.env.LACE_BODIES_DIR || path.join(os.tmpdir(), "lacelang-bodies"));
   }
 
   const scriptVars: Record<string, unknown> = {};
@@ -405,6 +416,7 @@ export async function main(argv?: string[]): Promise<number> {
     let saveTo: string | undefined;
     let bodiesDir: string | undefined;
     let pretty = false;
+    let saveBody = false;
     const enableExtensions: string[] = [];
 
     let i = 0;
@@ -412,6 +424,8 @@ export async function main(argv?: string[]): Promise<number> {
       const arg = rest[i];
       if (arg === "--pretty") {
         pretty = true;
+      } else if (arg === "--save-body") {
+        saveBody = true;
       } else if (arg === "--vars" && i + 1 < rest.length) {
         vars = rest[++i];
       } else if (arg === "--var" && i + 1 < rest.length) {
@@ -453,6 +467,7 @@ export async function main(argv?: string[]): Promise<number> {
       bodies_dir: bodiesDir,
       pretty,
       enable_extensions: enableExtensions,
+      save_body: saveBody,
     });
   }
 

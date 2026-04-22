@@ -46,7 +46,7 @@ export interface LaceConfig {
   };
   result: {
     path: string | false;
-    bodies: { dir: string };
+    bodies: { dir: string; save: boolean };
   };
   extensions: Record<string, Record<string, unknown>>;
   _meta: { source_path: string | null };
@@ -275,13 +275,16 @@ function applyDefaults(cfg: Record<string, unknown>): LaceConfig {
     throw new ConfigError("config [result.bodies] must be a table");
   }
 
-  let defaultBodiesDir: string;
-  if (typeof resultPath === "string") {
-    defaultBodiesDir = resultPath;
-  } else {
-    defaultBodiesDir = process.env.LACE_BODIES_DIR || DEFAULT_RESULT_PATH;
+  // result.bodies.dir: path string = save there, false = don't save (default).
+  let bodiesDir: string | false = false;
+  const envBodiesDir = process.env.LACE_BODIES_DIR;
+  if (envBodiesDir) {
+    bodiesDir = envBodiesDir;
+  } else if (typeof bodies.dir === "string") {
+    bodiesDir = bodies.dir;
+  } else if (bodies.dir !== false && bodies.dir !== undefined) {
+    bodiesDir = false;
   }
-  const bodiesDir = (bodies.dir as string) ?? defaultBodiesDir;
 
   const extBlock =
     typeof cfg.extensions === "object" && cfg.extensions !== null

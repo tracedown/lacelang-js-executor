@@ -144,6 +144,7 @@ export class Env {
   tagCtors: Record<string, (args: unknown[]) => unknown>;
   userAgent: string;
   defaultMaxRedirects: number;
+  saveBodies: boolean;
 
   constructor(
     scriptVars: Record<string, unknown>,
@@ -151,6 +152,7 @@ export class Env {
     bodiesDir: string,
     registry: ExtensionRegistry,
     userAgent?: string,
+    saveBodies?: boolean,
   ) {
     this.scriptVars = scriptVars;
     this.runVars = {};
@@ -162,6 +164,7 @@ export class Env {
     this.tagCtors = registry.tagConstructors();
     this.userAgent = userAgent || DEFAULT_USER_AGENT;
     this.defaultMaxRedirects = 10;
+    this.saveBodies = saveBodies ?? false;
   }
 }
 
@@ -179,22 +182,28 @@ export async function runScript(
   userAgent?: string | null,
   config?: Record<string, unknown> | null,
 ): Promise<Record<string, unknown>> {
-  // Resolve bodies dir: explicit arg > config result.bodies.dir > env default.
-  let dir: string;
+  // Resolve bodies dir: --bodies-dir arg > config result.bodies.dir > false.
+  // A path string means save bodies; false means don't save.
+  let resolvedBodiesDir: string | false = false;
   if (bodiesDir) {
-    dir = bodiesDir;
+    resolvedBodiesDir = bodiesDir;
   } else if (config && typeof (config as Record<string, unknown>).result === "object") {
     const result = (config as Record<string, unknown>).result as Record<string, unknown>;
     const bodies = result?.bodies as Record<string, unknown> | undefined;
     const cfgDir = bodies?.dir;
-    dir =
-      typeof cfgDir === "string" && cfgDir
-        ? cfgDir
-        : defaultBodiesDir();
-  } else {
-    dir = defaultBodiesDir();
+    if (typeof cfgDir === "string" && cfgDir) {
+      resolvedBodiesDir = cfgDir;
+    }
   }
-  fs.mkdirSync(dir, { recursive: true });
+
+  const saveBodies = typeof resolvedBodiesDir === "string";
+  let dir: string;
+  if (saveBodies) {
+    dir = resolvedBodiesDir;
+    fs.mkdirSync(dir, { recursive: true });
+  } else {
+    dir = defaultBodiesDir(); // placeholder, won't be used
+  }
 
   // Forward [extensions] subtree of lace.config so each rule's config
   // base sees per-extension settings.
@@ -211,6 +220,7 @@ export async function runScript(
     dir,
     registry,
     userAgent ?? undefined,
+    saveBodies,
   );
   env.defaultMaxRedirects = defaultMaxRedirectsFrom(config ?? null);
   const startedAt = nowIso();
@@ -410,16 +420,6 @@ async function runCall(
     (resolvedCfg.redirects as Record<string, unknown>)?.max,
   );
 
-  // Write request body to file
-  const requestCt = headers["Content-Type"] || bodyCt;
-  const requestBodyPath = writeBodyFile(
-    env,
-    bodyBytes,
-    true,
-    requestCt ?? undefined,
-    idx,
-  );
-
   // Issue request with redirects + retries
   const { result: httpResult, finalUrl, hops: redirectHops, redirectExceeded } =
     await issueWithRedirectsAndRetries(
@@ -441,7 +441,6 @@ async function runCall(
     url,
     method,
     headers,
-    bodyPath: requestBodyPath,
   };
 
   // Redirect list: every hop after the initial URL
@@ -475,19 +474,28 @@ async function runCall(
         : undefined;
 
     const chain = (call as Record<string, unknown>).chain as Record<string, unknown> | undefined;
-    const bodyCap = bodyCaptureLimit(chain || {}, env);
-    const bodyTooLarge =
-      bodyCap !== null && resp.body.length > bodyCap;
     let bodyPath: string | null = null;
-    if (!bodyTooLarge) {
-      bodyPath = writeBodyFile(env, resp.body, false, respCt, idx);
+    let bodyNotCapturedReason: string | null = null;
+
+    if (!env.saveBodies) {
+      bodyNotCapturedReason = "notRequested";
+    } else {
+      const bodyCap = bodyCaptureLimit(chain || {}, env);
+      const bodyTooLarge =
+        bodyCap !== null && resp.body.length > bodyCap;
+      if (!bodyTooLarge) {
+        bodyPath = writeBodyFile(env, resp.body, false, respCt, idx);
+      }
+      if (bodyTooLarge) {
+        bodyNotCapturedReason = "bodyTooLarge";
+      } else if (bodyPath === null) {
+        bodyNotCapturedReason = "notRequested";
+      }
     }
 
     responseRec = buildResponseRec(resp, bodyPath);
-    if (bodyTooLarge) {
-      responseRec.bodyNotCapturedReason = "bodyTooLarge";
-    } else if (bodyPath === null) {
-      responseRec.bodyNotCapturedReason = "notRequested";
+    if (bodyNotCapturedReason) {
+      responseRec.bodyNotCapturedReason = bodyNotCapturedReason;
     }
 
     absorbResponseCookies(activeJar, env, resp.headers);

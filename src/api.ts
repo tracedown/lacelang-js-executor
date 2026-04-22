@@ -165,6 +165,7 @@ export class LaceExecutor {
       env?: string | null;
       extensions?: string[] | null;
       trackPrev?: boolean;
+      saveBody?: boolean;
     },
   ) {
     if (root !== undefined && root !== null) {
@@ -183,6 +184,13 @@ export class LaceExecutor {
     }
 
     this._config = loadConfig(null, configPath, options?.env ?? null);
+    if (options?.saveBody && !this._config.result.bodies.dir) {
+      const resultPath = this._config.result.path;
+      this._config.result.bodies.dir =
+        typeof resultPath === "string"
+          ? resultPath
+          : (process.env.LACE_BODIES_DIR || require("os").tmpdir() + "/lacelang-bodies");
+    }
     this.trackPrev = options?.trackPrev ?? true;
 
     // Built-in extensions from config + constructor arg.

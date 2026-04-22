@@ -19,8 +19,7 @@
         "headers": {
           "Content-Type": "application/json",
           "User-Agent": "lace-probe/0.1.0 (lacelang-js)"
-        },
-        "bodyPath": "call_0_request.json"
+        }
       },
       "response": {
         "status": 200,

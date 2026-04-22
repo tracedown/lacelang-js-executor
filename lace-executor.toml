@@ -1,0 +1,17 @@
+[executor]
+name        = "lacelang-js-executor"
+version     = "0.1.0"
+language    = "typescript"
+conforms_to = ">=0.9.1"
+
+[adapter]
+parse    = "node dist/cli.js parse {script}"
+validate = "node dist/cli.js validate {script} --vars-list {vars_list} --context {context}"
+run      = "node dist/cli.js run {script} --vars {vars} --prev {prev}"
+timeout_seconds = 30
+
+[adapter.env]
+LACE_BODIES_DIR = "/tmp/lace-bodies"
+
+[conformance]
+omit = ["extensions"]
