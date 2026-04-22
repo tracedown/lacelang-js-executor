@@ -46,7 +46,7 @@ export interface LaceConfig {
   };
   result: {
     path: string | false;
-    bodies: { dir: string; save: boolean };
+    bodies: { dir: string | false };
   };
   extensions: Record<string, Record<string, unknown>>;
   _meta: { source_path: string | null };
