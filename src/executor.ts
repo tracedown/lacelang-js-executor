@@ -197,13 +197,9 @@ export async function runScript(
   }
 
   const saveBodies = typeof resolvedBodiesDir === "string";
-  let dir: string;
-  if (saveBodies) {
-    dir = resolvedBodiesDir;
-    fs.mkdirSync(dir, { recursive: true });
-  } else {
-    dir = defaultBodiesDir(); // placeholder, won't be used
-  }
+  const dir: string = saveBodies
+    ? (fs.mkdirSync(resolvedBodiesDir as string, { recursive: true }), resolvedBodiesDir as string)
+    : defaultBodiesDir();
 
   // Forward [extensions] subtree of lace.config so each rule's config
   // base sees per-extension settings.
