@@ -8,6 +8,7 @@ jobs:
   release:
     if: github.repository == 'tracedown/lacelang-js-executor'
     runs-on: ubuntu-latest
+    environment: npm
     permissions:
       contents: write
       id-token: write
@@ -35,7 +36,7 @@ jobs:
       - uses: actions/setup-node@v4
         if: steps.check.outputs.exists == 'false'
         with:
-          node-version: "20"
+          node-version: "22"
           registry-url: "https://registry.npmjs.org"
 
       - name: Install and build
@@ -45,8 +46,6 @@ jobs:
       - name: Publish to npm
         if: steps.check.outputs.exists == 'false'
         run: npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Create tag
         if: steps.check.outputs.exists == 'false'
