@@ -31,7 +31,7 @@
     "README.md"
   ],
   "bin": {
-    "lacelang-executor": "./dist/cli.js"
+    "lacelang-executor": "dist/cli.js"
   },
   "scripts": {
     "build": "tsc && rm -rf dist/extensions && cp -r src/extensions dist/extensions",
