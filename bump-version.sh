@@ -56,5 +56,10 @@ if [[ -n "$new_spec" ]]; then
         "$SCRIPT_DIR/src/index.ts"
     sed -i "s/>=$cur_spec\"/>=$new_spec\"/" \
         "$SCRIPT_DIR/lace-executor.toml"
-    echo "  index.ts, lace-executor.toml"
+    # CI conformance download tag
+    if [[ -f "$SCRIPT_DIR/.github/workflows/test.yml" ]]; then
+        sed -i "s/testkit-v$cur_spec/testkit-v$new_spec/g" \
+            "$SCRIPT_DIR/.github/workflows/test.yml"
+    fi
+    echo "  index.ts, lace-executor.toml, CI workflow"
 fi

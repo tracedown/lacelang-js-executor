@@ -48,7 +48,7 @@ jobs:
         run: rm -f package-lock.json && npm install && npm run build
       - name: Download conformance harness
         run: |
-          gh release download testkit-v0.9.1 -R tracedown/lacelang -p 'lace-conformance-linux-x86_64'
+          gh release download testkit-v0.9.2 -R tracedown/lacelang -p 'lace-conformance-linux-x86_64'
           chmod +x lace-conformance-linux-x86_64
         env:
           GH_TOKEN: ${{ github.token }}
