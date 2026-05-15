@@ -17,9 +17,11 @@ import * as fs from "node:fs";
 import * as os from "node:os";
 import * as path from "node:path";
 import { fileURLToPath } from "node:url";
+import { createRequire } from "node:module";
 import { performance } from "node:perf_hooks";
 
-const __version__ = "0.1.0";
+const _require = createRequire(import.meta.url);
+const __version__: string = _require("../package.json").version;
 import {
   type HttpResult,
   sendRequest,
@@ -44,6 +46,7 @@ export const BUILTIN_EXTENSIONS: Record<string, string> = {
   // default/ — bundled with every executor
   laceNotifications: "default/laceNotifications/laceNotifications.laceext",
   laceBaseline: "default/laceBaseline/laceBaseline.laceext",
+  laceEmitRecovery: "default/laceEmitRecovery/laceEmitRecovery.laceext",
   // test/ — conformance suite only
   notifCounter: "test/notifCounter/notifCounter.laceext",
   notifWatch: "test/notifWatch/notifWatch.laceext",
