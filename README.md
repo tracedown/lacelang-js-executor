@@ -1,5 +1,7 @@
 # lacelang-executor (TypeScript)
 
+[![npm](https://img.shields.io/npm/v/@lacelang/executor)](https://www.npmjs.com/package/@lacelang/executor)
+
 Reference TypeScript executor for [Lace](https://github.com/tracedown/lacelang) --
 the reference implementation with **100% spec conformance**. Runs `.lace` scripts against real HTTP endpoints and
 emits ProbeResult JSON.
