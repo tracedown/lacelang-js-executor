@@ -1688,6 +1688,15 @@ function evalBinary(node: Record<string, unknown>, env: Env): unknown {
   return null;
 }
 
+// Raw-string coercion for `includes` (spec §8). Strings pass through; null →
+// empty string; everything else (bool/number/array/object) → compact JSON —
+// which already yields `true`/`false` for booleans and bare digits for ints.
+function rawString(v: unknown): string {
+  if (v === null || v === undefined) return "";
+  if (typeof v === "string") return v;
+  return JSON.stringify(v);
+}
+
 function evalFunc(node: Record<string, unknown>, env: Env): unknown {
   const name = node.name as string;
   const argsNodes = (node.args as unknown[]) || [];
@@ -1698,6 +1707,17 @@ function evalFunc(node: Record<string, unknown>, env: Env): unknown {
   if (name === "schema") {
     const val = argsNodes.length > 0 ? evalExpr(argsNodes[0], env) : null;
     return { __lace_schema__: true, schema: val };
+  }
+  // Assert-only helpers (spec §8). The validator guarantees they appear only
+  // inside `.assert()` conditions, so no context check is needed here.
+  if (name === "count") {
+    const val = argsNodes.length > 0 ? evalExpr(argsNodes[0], env) : null;
+    return Array.isArray(val) ? val.length : 1;
+  }
+  if (name === "includes") {
+    const search = argsNodes.length > 0 ? evalExpr(argsNodes[0], env) : null;
+    const target = argsNodes.length > 1 ? evalExpr(argsNodes[1], env) : null;
+    return rawString(target).includes(rawString(search));
   }
   // Extension-registered tag constructors
   if (name in env.tagCtors) {

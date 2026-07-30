@@ -1,6 +1,6 @@
 {
   "name": "@lacelang/executor",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "type": "module",
   "description": "Reference TypeScript executor for the Lace probe scripting language",
   "license": "Apache-2.0",
