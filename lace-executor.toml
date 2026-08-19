@@ -1,8 +1,8 @@
 [executor]
 name        = "lacelang-js-executor"
-version     = "0.1.3"
+version     = "0.1.4"
 language    = "typescript"
-conforms_to = ">=0.9.4"
+conforms_to = ">=0.9.5"
 
 [adapter]
 parse    = "node dist/cli.js parse {script}"
