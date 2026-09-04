@@ -1,11 +1,18 @@
 {
   "name": "@lacelang/executor",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "type": "module",
   "description": "Reference TypeScript executor for the Lace probe scripting language",
   "license": "Apache-2.0",
   "author": "lacelang contributors",
-  "keywords": ["lace", "lacelang", "executor", "http", "probe", "monitoring"],
+  "keywords": [
+    "lace",
+    "lacelang",
+    "executor",
+    "http",
+    "probe",
+    "monitoring"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tracedown/lacelang-js-executor.git"
