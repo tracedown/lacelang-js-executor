@@ -1,6 +1,6 @@
 {
   "name": "@lacelang/executor",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "type": "module",
   "description": "Reference TypeScript executor for the Lace probe scripting language",
   "license": "Apache-2.0",
@@ -20,7 +20,7 @@
   "homepage": "https://github.com/tracedown/lacelang-js-executor",
   "bugs": "https://github.com/tracedown/lacelang-js-executor/issues",
   "engines": {
-    "node": ">=18"
+    "node": ">=20.19"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
